@@ -14,6 +14,14 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
+
+colors = {
+    'Red': Color(255, 0, 0),
+    'Green': Color(0, 255, 0),
+    'Blue': Color(0,0,255)
+    }
+
+
 def _clean_shutdown():
     """Registered at exit to ensure strip cleans up after itself
     and all pixels are turned off.
@@ -26,10 +34,10 @@ def brightness(b=0.3):
     :param b: Brightness from 0.0 to 1.0 (default 0.2)
     """
 
-    if b > 1 or b < 0:
+    if b > 256 or b < -1:
         raise ValueError('Brightness must be between 0.0 and 1.0')
 
-    brightness = int(b*255.0)
+    brightness = b
     if brightness < 60:
         print("Warning: Low brightness chosen, your strip might not light up!")
 
@@ -55,9 +63,9 @@ def set_pixel(i, r, g, b):
     if i is not None:
         strip.setPixelColorRGB(i, r, g, b)
 
-def set_all_pixels(r, g, b):
+def set_all_pixels(color):
     for x in range(length()):
-        strip.setPixelColorRGB(x, r, g, b)
+        strip.setPixelColor(x, color)
 
 def get_pixel(i, r, g, b):
     if i is not None:
