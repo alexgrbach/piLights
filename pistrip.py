@@ -1,4 +1,5 @@
 import atexit
+from random import randint
 
 from neopixel import *
 
@@ -13,13 +14,41 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
+   
+class LedColors:
+    def __init__(self):
+        self.colors = {
+            'Red': Color(255, 0, 0),
+            'Green': Color(0, 255, 0),
+            'Blue': Color(0,0,255),
+            'White': Color(255,255,255),
+            'Black': Color(0, 0, 0)
+            }
+
+        self.color_index = 0
+
+    def get(self, key):
+        return self.colors.get(key)
+
+    def cycle(self):
+        color = self.colors.values()[self.color_index]
+        self.color_index += 1
+        if(self.color_index >= len(self.colors.keys())):
+            self.color_index = 0
+        return color
+
+    def random(self):
+        return Color(self.__randint_for_color(), self.__randint_for_color(), self.__randint_for_color())
+
+    def __randint_for_color(self):
+        return randint(0, 255)/randint(1,10)
 
 
-colors = {
-    'Red': Color(255, 0, 0),
-    'Green': Color(0, 255, 0),
-    'Blue': Color(0,0,255)
-    }
+
+led_colors = LedColors()
+
+
+
 
 
 def _clean_shutdown():
@@ -28,7 +57,7 @@ def _clean_shutdown():
     """
     off()
 
-def brightness(b=0.3):
+def brightness(b=60):
     """Set the display brightness between 0.0 and 1.0
 
     :param b: Brightness from 0.0 to 1.0 (default 0.2)
@@ -38,8 +67,8 @@ def brightness(b=0.3):
         raise ValueError('Brightness must be between 0.0 and 1.0')
 
     brightness = b
-    if brightness < 60:
-        print("Warning: Low brightness chosen, your strip might not light up!")
+    # if brightness < 60:
+    #     print("Warning: Low brightness chosen, your strip might not light up!")
 
     strip.setBrightness(brightness)
 
@@ -53,27 +82,27 @@ def get_brightness():
 def clear():
     """Clear the buffer"""
     for x in range(length()):
-        strip.setPixelColorRGB(x, 0, 0, 0)
+        set_pixel(x, led_colors.get("Black"))
 
 def off():
     clear()
     show()
 
-def set_pixel(i, r, g, b):
-    if i is not None:
-        strip.setPixelColorRGB(i, r, g, b)
+def set_pixel(x=0, color=led_colors.get('White')):
+    if x is not None:
+        strip.setPixelColor(x, color)
 
-def set_all_pixels(color):
+def set_all_pixels(color=led_colors.get("White")):
     for x in range(length()):
         strip.setPixelColor(x, color)
 
-def get_pixel(i, r, g, b):
-    if i is not None:
-        pixel = strip.getPixelColor(i)
-        return int(pixel.r), int(pixel.g), int(pixel.b)
+# def get_pixel(i, r, g, b):
+#     if i is not None: 
+#         pixel = strip.getPixelColor(i)
+#         return int(pixel.r), int(pixel.g), int(pixel.b)
 
 def get_pixels():
-    return [get_pixel(i) for i in range(length())]
+    return [get_pixel(x) for x in range(length())]
 
 def show():
     strip.show()
