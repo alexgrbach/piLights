@@ -1,60 +1,100 @@
 import time
-from random import randint
 import pistrip as strip
 import os as sys
 
-def fire(width = 10, delay=0, r=255, g=255, b=255):
+from random import randint
+from neopixel import *
+
+def fire_cycle(width = 10, delay=0, brightness=128, color=strip.led_colors.get("White")):
+	fire_down(width, delay, brightness, color)
+	fire_back(width, delay, brightness, color)
+
+def fire_down(width = 10, delay=0, brightness=128, color=strip.led_colors.get("White")):
+	strip.brightness(brightness)
 	for x in range(-width, strip.length(),1):
 		for y in range(width):
-			strip.set_pixel(x+y, r, g, b)
-		strip.show()
-		time.sleep(delay)
-		strip.clear()
-	for x in range(strip.length(), -width, -1):
-		for y in range(width):
-			strip.set_pixel(x+y, r, g, b)
+			if(x+y >= 0):
+				strip.set_pixel(x+y, color)
 		strip.show()
 		time.sleep(delay)
 		strip.clear()
 
-def breathe(durriation=5,color=Color(255,255,255)):
+def fire_back(width = 10, delay=0, brightness=128, color=strip.led_colors.get("White")):
+	strip.brightness(brightness)
+	for x in range(strip.length(), -width, -1):
+		for y in range(width):
+			if(x+y >= 0):	
+				strip.set_pixel(x+y, color)
+			#print "x: %s y: %s" %(x,y)
+		strip.show()
+		time.sleep(delay)
+		strip.clear()
+
+def breathe(step_width=5, min_brightness=60, max_brightness=255, color=strip.led_colors.get("White")):
 	strip.set_all_pixels(color)
-	for y in range(60,255, durriation):
+	for y in range(min_brightness, max_brightness, step_width):
 			strip.brightness(y)
 			strip.show()
-	for y in range(255, 60, -durriation):
+	for y in range(max_brightness, min_brightness, -step_width):
 		strip.brightness(y)
 		strip.show()
 	strip.clear()
 
-def flash_all(durriation=1, r=255, g=255, b=255):
-	strip.set_all_pixels(r,g,b)
+def flash_all(delay=1, color=strip.led_colors.get("White")):
+	strip.set_all_pixels(color)
 	strip.show()
-	time.sleep(durriation)
+	time.sleep(delay)
+	strip.off()
+	time.sleep(0)
+
+def lol():
+	delay=0.1
+	for x in range(0, strip.length(), 3):
+		strip.set_pixel(x, strip.led_colors.get("Blue"))
+		strip.set_pixel(x+1, strip.led_colors.get("Green"))
+		strip.set_pixel(x+2, strip.led_colors.get("Red"))
+	strip.show()
+	time.sleep(delay)
+	strip.clear()
+	for x in range(0, strip.length(), 3):
+		strip.set_pixel(x+1, strip.led_colors.get("Blue"))
+		strip.set_pixel(x+2, strip.led_colors.get("Green"))
+		strip.set_pixel(x, strip.led_colors.get("Red"))
+	strip.show()
+	time.sleep(delay)
+	strip.clear()
+	for x in range(0, strip.length(), 3):
+		strip.set_pixel(x+2, strip.led_colors.get("Blue"))
+		strip.set_pixel(x, strip.led_colors.get("Green"))
+		strip.set_pixel(x+1, strip.led_colors.get("Red"))
+	strip.show()
+	time.sleep(delay)
 	strip.clear()
 
-def random_int_for_color():
-	return randint(0, 255)/randint(1,10)
 
-def random_color():
-	return Color(random_int_for_color(), random_int_for_color(), random_int_for_color())
+def cycle_all_colors():
+	color = strip.led_colors.cycle()
+	#exclude black
+	if(color == 0):
+		color = strip.led_colors.cycle()
+	return (color)
 
-print("""Testing.
 
-""")
+ 
+print("Testing...")
 
 try:
 	while True:
-		#fire(150,0,random_int_for_color(),random_int_for_color(),random_int_for_color())
-		#for x in range(randint(1,100)):
-		r=random_int_for_color()
-		g=random_int_for_color()
-		b=random_int_for_color()
-		breathe(3,random_color())
-		# r=random_int_for_color()
-		# g=random_int_for_color()
-		# b=random_int_for_color()
-		# fire(150,0,r,g,b)
+		breathe(3, 60, 255, strip.led_colors.random())
+		#flash_all(10, cycle_all_colors())
+		# fire(randint(1,300),0, 255,strip.led_colors.random())
+		#fire_down(1,0,255,cycle_all_colors())
+		#lol()
+		#print(strip.led_colors.cycle())
+		#time.sleep(.1)
 except KeyboardInterrupt:
 	strip.off()
+	time.sleep(0.2)
+	print("""
+kthxbai!""")
 	exit(0)
