@@ -4,7 +4,7 @@ from random import randint
 from neopixel import *
 
 # LED strip configuration:
-LED_COUNT      = 300      # Number of LED pixels.
+LED_COUNT      = 299     # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
@@ -19,8 +19,11 @@ class LedColors:
     def __init__(self):
         self.colors = {
             'Red': Color(0, 255, 0),
-            'Green': Color(255, 0, 0),
+            	'Yellow': Color(255,255,0),
+		'Green': Color(255, 0, 0),
+		'Cyan': Color(2550,0,255),
             'Blue': Color(0,0,255),
+		'Magenta': Color(0,255,255),
             'White': Color(255,255,255),
             'Black': Color(0, 0, 0)
             }
