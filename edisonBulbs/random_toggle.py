@@ -7,7 +7,7 @@ try:
 	edisonBulbs.setup()
 	while True:
 		edisonBulbs.toggle_random_bulbs()
-		time.sleep(300)
+		time.sleep(1)
 except KeyboardInterrupt:
 	print("""
 kthxbai!""")

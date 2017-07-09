@@ -7,7 +7,7 @@ try:
 	edisonBulbs.setup()
 	edisonBulbs.toggle_random_bulbs()
 	while True:
-		time.sleep(1)
+		time.sleep(300)
 		edisonBulbs.toggle_bulb(edisonBulbs.chan_list[randint(0,7)])
 except KeyboardInterrupt:
 	print("""
