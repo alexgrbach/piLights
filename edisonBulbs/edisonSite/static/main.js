@@ -23,3 +23,11 @@ function setLightCss(element, index, array){
 	if (element == 1 && !light.hasClass("light_on")){light.addClass("light_on")}
 	else if (element == 0 && light.hasClass("light_on")){light.removeClass("light_on")}
 }
+
+function setRoutine(){
+	var routine = $('#filterDay label.active input').val()
+	var seconds = $('#secondsInput').val()
+	var secondsModifier = $('#secondsModifier').val()
+	var delay = seconds * secondsModifier
+	$.get('/routine/'+routine+'/'+delay)
+}

@@ -81,7 +81,7 @@ def toggle(bulb):
 def toggle_random_bulb(delay):
 	def toggle_bulb():
 		bulbs.toggle_bulb(channels[randint(0,7)])
-		
+
 	global t
 	t.cancel()
 	all_off()
@@ -89,8 +89,6 @@ def toggle_random_bulb(delay):
 	t = perpetualTimer(float(delay),toggle_bulb)
 	t.start()
 	return "ok"
-
-
 
 @app.route('/routine/toggleRandomBulbs/<delay>/')
 def toggle_random_bulbs(delay):
@@ -102,7 +100,17 @@ def toggle_random_bulbs(delay):
 	t.start()
 	return "ok"
 
-
+@app.route('/routine/singleRandomBulb/<delay>/')
+def single_random_bulb(delay):
+	def set_random_bulb():
+		all_off()
+		bulbs.toggle_bulb(channels[randint(0,7)])	
+	global t
+	t.cancel()
+	set_random_bulb()
+	t = perpetualTimer(float(delay),random_bulb)
+	t.start()
+	return "ok"
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', debug=True)
