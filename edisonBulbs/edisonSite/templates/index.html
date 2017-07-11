@@ -37,33 +37,33 @@
 				<p>Click on the lights below to toggle them on and off.</p>
 			</div>
 			<div class="col-xs-2 col-xs-offset-2 col-sm-1 col-sm-offset-2">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i id="lol" class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(0)"></i>
 			</div>
 			<div class="col-xs-2 col-sm-1">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(1)"></i>
 			</div>
 			<div class="col-xs-2 col-sm-1">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(2)"></i>
 			</div>
 			<div class="col-xs-2 col-sm-1">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical light_on" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(3)"></i>
 			</div>
 			<div class="col-xs-2 col-xs-offset-2 col-sm-1 col-sm-offset-0">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(4)"></i>
 			</div>
 			<div class="col-xs-2 col-sm-1">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(5)"></i>
 			</div>
 			<div class="col-xs-2 col-sm-1">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(6)"></i>
 			</div>
 			<div class="col-xs-2 col-sm-1">
-				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true"></i>
+				<i class="fa fa-lightbulb-o fa-5x fa-flip-vertical" aria-hidden="true" onclick="toggleBulb(7)"></i>
 			</div>
 		</div>
 		<div class="row" id="general_buttons">
-			<button type="button" class="btn btn-success btn-lg col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-2">All Bulbs On</button>
-			<button type="button" class="btn btn-danger btn-lg col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0">All Bulbs Off</button>	
+			<button type="button" class="btn btn-success btn-lg col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-2" onclick="allOn()">All Bulbs On</button>
+			<button type="button" class="btn btn-danger btn-lg col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0" onclick="allOff()">All Bulbs Off</button>	
 		</div>
 		<div class="row">
 			<div class="col-xs-10 col-xs-offset-1">
