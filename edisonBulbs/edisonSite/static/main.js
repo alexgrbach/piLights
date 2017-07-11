@@ -25,7 +25,7 @@ function setLightCss(element, index, array){
 }
 
 function setRoutine(){
-	var routine = $('#filterDay label.active input').val()
+	var routine = $('#routines label.active input').val()
 	var seconds = $('#secondsInput').val()
 	var secondsModifier = $('#secondsModifier').val()
 	var delay = seconds * secondsModifier

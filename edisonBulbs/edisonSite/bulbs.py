@@ -108,7 +108,7 @@ def single_random_bulb(delay):
 	global t
 	t.cancel()
 	set_random_bulb()
-	t = perpetualTimer(float(delay),random_bulb)
+	t = perpetualTimer(float(delay),set_random_bulb)
 	t.start()
 	return "ok"
 
