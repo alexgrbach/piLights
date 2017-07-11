@@ -1,26 +1,21 @@
 $( document ).ready(function() {
     $.get('/status/')
-	.done(function(data){bulbStatus(data)})
+	.done(function(data){data.forEach(setLightCss)})
 });
 
 function toggleBulb(bulb){
 	$.get('/toggle/' + bulb)
-	.done(function(data){bulbStatus(data)})
+	.done(function(data){data.forEach(setLightCss)})
 }
 
 function allOn(){
 	$.get('/all/on/')
-	.done(function(data){bulbStatus(data)})
+	.done(function(data){data.forEach(setLightCss)})
 }
 
 function allOff(){
 	$.get('/all/off/')
-	.done(function(data){bulbStatus(data)})
-}
-
-function bulbStatus(bulbs){
-	console.log(bulbs)
-	bulbs.forEach(setLightCss)
+	.done(function(data){data.forEach(setLightCss)})
 }
 
 function setLightCss(element, index, array){
