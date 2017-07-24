@@ -169,8 +169,8 @@ try:
 		
 		# for x in range(10,63,1):
 		# 	strip.set_pixel(x, strip.led_colors.get("White"))	
-		#for x in range(64,299,3):
-		#	strip.set_pixel(x, strip.led_colors.get("White"))
+		#for x in range(64,299,2):
+		#	strip.set_pixel(x, Color(130,255,41))
 		#snakes(randint(1,300),0, 255,strip.led_colors.random())
 		#strip.show();
 		random_snakes()

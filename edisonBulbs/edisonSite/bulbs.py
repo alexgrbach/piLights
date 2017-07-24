@@ -6,11 +6,10 @@ from threading import Timer,Thread,Event
 import time
 import edisonBulbs as bulbs
 from sys import exit
-from flask import json
 from random import randint
 
 try:
-    from flask import Flask, render_template
+    from flask import Flask, render_template, json
 except ImportError:
     exit("This script requires the flask module\nInstall with: sudo pip install flask")
 
@@ -40,6 +39,11 @@ app = Flask(__name__)
 channels = bulbs.channels
 t = perpetualTimer(1,default)
 
+
+@app.route('/')
+def home():
+	return render_template('index.html')
+
 @app.route('/status/')
 def status():
 	data = []
@@ -51,10 +55,6 @@ def status():
 	    mimetype='application/json'
 	)
 	return response
-
-@app.route('/')
-def home():
-	return render_template('index.html')
 
 @app.route('/all/off/')
 def all_off():
