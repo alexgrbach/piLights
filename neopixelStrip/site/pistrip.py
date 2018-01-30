@@ -36,19 +36,19 @@ class LedColors:
 		if(self.color_index >= len(self.colors.keys())):
 			self.color_index = 0
 		return color
-
 	def random(self):
 		return Color(self.__randint_for_color(), self.__randint_for_color(), self.__randint_for_color())
 
 	def __randint_for_color(self):
 		return randint(0, 255)/randint(1,10)
 
+
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
 led_colors = LedColors() 
 
-def brightness(b=60):
+def set_brightness(b=60):
 	if 0 <= b <= 255:
 		strip.setBrightness(b)
 	else:
@@ -71,21 +71,23 @@ def set_pixel(x=0, color=led_colors.get('White')):
 		strip.setPixelColor(x, color)
 
 def set_pixel_range(start=0, end=299, color=led_colors.get("White")):
+	# print("pistrip.py")
+	# print("start: " + str(start) + " end: " + str(end))
 	if start < end:
-		for x in range(start, end, 1):
+		for x in range(start, end +1, 1):
 			strip.setPixelColor(x, color)
 	elif start > end:
-		for x in range(end, start, -1):
+		for x in range(end, start +1, 1):
 			strip.setPixelColor(x, color)
-	else:
-		strip.set_pixel(start, color)
+	elif start == end:
+		set_pixel(start, color)
 
 def set_all_pixels(color=led_colors.get("White")):
 	for x in range(length()):
 		strip.setPixelColor(x, color)
 
 def get_pixel(pixel):
-	if 0 < pixel <= length(): 
+	if pixel is not None:
 		return strip.getPixelColor(pixel)
 
 def get_pixels():
@@ -98,10 +100,15 @@ def length():
 	return strip.numPixels()
 
 def ColorToRGB(color):
-	green = color >> 16
-	red = ~(~(color >> 8) | ~(color >> 16))
-	blue = ~(~(color >> 16) | ~(color))
-	return [color,red,green,blue]
+	binaryColor = bindigits(color, 32)
+	red = int(binaryColor[16:24], 2)
+	green = int(binaryColor[8:16], 2)
+	blue = int(binaryColor[24:32], 2)
+	return (red,green,blue)
+
+def bindigits(n, bits):
+ 	s = bin(n & int("1"*bits, 2))[2:]
+	return ("{0:0>%s}" % (bits)).format(s)
 
 def _clean_shutdown():
 	off()

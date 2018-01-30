@@ -50,10 +50,6 @@ class LedColors:
 
 led_colors = LedColors()
 
-
-
-
-
 def _clean_shutdown():
     """Registered at exit to ensure strip cleans up after itself
     and all pixels are turned off.
