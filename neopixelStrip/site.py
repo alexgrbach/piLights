@@ -46,7 +46,7 @@ app = Flask(__name__)
 def home():
 	pixel_data = []
 	for x in range(0,strip.length()):
-		pixel_data.append(color_to_hex(strip.get_pixel(x)))
+		pixel_data.append(strip.ColorToRGB(strip.get_pixel(x)))
 
 	return render_template('index.html', pixels=pixel_data)
 
@@ -75,7 +75,7 @@ def pixel_get_all():
 
 	pixel_data = []
 	for x in range(0,strip.length()):
-		pixel_data.append(color_to_hex(strip.get_pixel(x)))
+		pixel_data.append(strip.ColorToRGB(strip.get_pixel(x)))
 	response_object.update({"stripColors": pixel_data})
 
 	# html_data = []
@@ -182,7 +182,8 @@ class response:
 
 def color_to_icon(index, html_color):
 	return """<i class="fas fa-circle" index=\"""" + str(index) + """\" style="color:""" + html_color + """"></i>"""
-	 
+
+		 
 
 def color_to_hex(pixel_color):
 	return '#%02x%02x%02x' % strip.ColorToRGB(pixel_color)		

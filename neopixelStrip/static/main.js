@@ -30,7 +30,9 @@ function selectRange(control){
 	      inline: true,
 	      container: true,
 	      format:"rgb"
-	    }).on('colorpickerChange', function (e) {	    	
+	    }).on('colorpickerChange', function (e) {
+
+	    console.log(`rgb(${e.color._r.toFixed()},${e.color._g.toFixed()},${e.color._b.toFixed()})`)	    	
 	    	if (!isDone){
 	    		isDone = true;
 	    		$.get(`/pixel/set/range/${startPixel}/${endPixel}/${e.color._r.toFixed()}/${e.color._g.toFixed()}/${e.color._b.toFixed()}/`)
@@ -78,6 +80,7 @@ $('.shade').mousedown(function(){
 
 
 
+
 $('#brightness_slider').on('input', function(){
 	$.get('/brightness/set/'+$(this).val())
 });
@@ -97,8 +100,32 @@ function getStatus(){
 
 function update(data){
 	$('#brightness_slider').val(data.brightness);
-	$('#colorArray').children().each(function(index){$(this).css('color', data.stripColors[index])});
+	$('#colorArray').children().each(function(index){$(this).css({'color': 'rgb(' + data.stripColors[index].join(', ') + ')'});});
+
 }
+
+
+
+
+
+function makeColorGradient(frequency1, frequency2, frequency3,
+                             phase1, phase2, phase3,
+                             center, width)
+  {
+    if (center == undefined)   center = 128;
+    if (width == undefined)    width = 127;
+    var done = false;
+    for (var i = 0; i < container.numberOfBulbs; ++i)
+    {
+       var r = (Math.sin(frequency1*i + phase1) * width + center).toFixed();
+       var g = (Math.sin(frequency2*i + phase2) * width + center).toFixed();
+       var b = (Math.sin(frequency3*i + phase3) * width + center).toFixed();
+       $.get(`/pixel/set/single/${i}/${r}/${g}/${b}`).done(function(data){
+				container = data;
+				update(data);
+			});
+    }
+  }
 
 // function setRange(startPixel, endPixel){
 // 	var rgb = $('div.colorpicker').val()
